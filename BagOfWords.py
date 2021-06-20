@@ -46,7 +46,22 @@ corpus = []
 
 for i in range(len(sentences)):
     review = re.sub('[^a-zA-Z]', " ", sentences[i])
-    review = review.low
+    review = review.lower()
+    review = review.split()
+  #stemming  review = [ps.stem(word) for word in review if not word in set(stopwords.words('english'))]
+  #lemmetization
+    review = [wordnet.lemmatize(word) for word in review if not word in set(stopwords.words('english'))]
+    review = " ".join(review)
+    corpus.append(review)
+    
+
+# Creating the bag of words model
+
+from sklearn.feature_extraction.text import CountVectorizer
+cv = CountVectorizer()
+X = cv.fit_transform(corpus).toarray()
+
+    
 
 
 
